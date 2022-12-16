@@ -63,10 +63,54 @@ function CheckOtpCode({user}) {
                 });
               }
             }
-          }else{
-            alert("OTP không đúng")
+          } else if(res.data.responseCode === '16') {
+            swal({
+              title: "Thất bại",
+              text: "Sai OTP",
+              icon: "error",
+              button: "OK",
+            }).then(() => {
+              window.location.replace("/register")
+            });
+          } else if(res.data.responseCode === '11' && params === "verify_user") {
+            swal({
+              title: "Thất bại",
+              text: "Tên đăng nhập đã tồn tại",
+              icon: "error",
+              button: "OK",
+            }).then(() => {
+              window.location.replace("/register")
+            });
+          } else if(res.data.responseCode === '01' && params === "verify_login") {
+            swal({
+              title: "Thất bại",
+              text: "Sai tên tài khoản hoặc mật khẩu",
+              icon: "error",
+              button: "OK",
+            }).then(() => {
+              window.location.replace("/login")
+            });
+          } else{
+            swal({
+              title: "Thất bại",
+              text: "Hệ thống đang xảy ra lỗi vui lòng quay lại sau!",
+              icon: "error",
+              button: "OK",
+            }).then(() => {
+              window.location.replace("/register")
+            });
           }
-        }).catch(error => console.log(error))
+        }).catch(error => {
+          console.log(error);
+          swal({
+              title: "Thất bại",
+              text: "Hệ thống đang xảy ra lỗi vui lòng quay lại sau!",
+              icon: "error",
+              button: "OK",
+          }).then(() => {
+              window.location.replace("/register")
+          });
+      })
         console.log(json)
     }
 
