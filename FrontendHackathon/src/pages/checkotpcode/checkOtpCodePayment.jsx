@@ -49,17 +49,72 @@ function CheckOtpCodePayment({user}) {
                     icon: "error",
                     button: "OK",
                 })
-            }else{
+            } else if (res.data.response.responseCode === "04") {
+                swal({
+                    title: "Thất bại",
+                    text: "Tài khoản bạn không đủ tiền!",
+                    icon: "error",
+                    button: "OK",
+                }).then(() => {
+                    window.location.replace("/payment")
+                });
+            } else if (res.data.response.responseCode === "07") {
+                swal({
+                    title: "Thất bại",
+                    text: "Tài khoản ngân hàng không tồn tại!",
+                    icon: "error",
+                    button: "OK",
+                }).then(() => {
+                    window.location.replace("/payment")
+                });
+            } else if (res.data.response.responseCode === "09") {
+                swal({
+                    title: "Thất bại",
+                    text: "Tài khoản ngân hàng không hợp lệ!",
+                    icon: "error",
+                    button: "OK",
+                }).then(() => {
+                    window.location.replace("/payment")
+                });
+            } else if (res.data.response.responseCode === "08") {
+                swal({
+                    title: "Thất bại",
+                    text: "Tài khoản ngân hàng không hoạt động!",
+                    icon: "error",
+                    button: "OK",
+                }).then(() => {
+                    window.location.replace("/payment")
+                });
+            } else if (res.data.response.responseCode === "10") {
+                swal({
+                    title: "Thất bại",
+                    text: "Không tìm thấy khoản học phí để thanh toán!",
+                    icon: "error",
+                    button: "OK",
+                }).then(() => {
+                    window.location.replace("/payment")
+                });
+            } else {
                 swal({
                     title: "Thất bại",
-                    text: res.data.response.responseMessage,
+                    text: "Hệ thống đang xảy ra lỗi vui lòng quay lại sau!",
                     icon: "error",
                     button: "OK",
                 }).then(() => {
                     window.location.replace("/payment")
                 });
             }
-        }).catch(error => console.log(error))
+        }).catch(error => {
+            console.log(error);
+            swal({
+                title: "Thất bại",
+                text: "Hệ thống đang xảy ra lỗi vui lòng quay lại sau!",
+                icon: "error",
+                button: "OK",
+            }).then(() => {
+                window.location.replace("/payment")
+            });
+        })
         // console.log(json)
     }
 
